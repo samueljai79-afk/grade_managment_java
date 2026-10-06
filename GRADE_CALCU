@@ -1,0 +1,78 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentGradeTracker {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Double> scores = new ArrayList<>();
+
+        System.out.println("==========================================");
+        System.out.println("          STUDENT GRADE TRACKER           ");
+        System.out.println("==========================================");
+        System.out.println("Enter student scores out of 100.");
+        System.out.println("Type -1 when you are finished entering scores.\n");
+
+        while (true) {
+            System.out.print("Enter score (or -1 to finish): ");
+
+            if (!scanner.hasNextDouble()) {
+                System.out.println("Invalid input. Please enter a numerical score.");
+                scanner.next();
+                continue;
+            }
+
+            double score = scanner.nextDouble();
+
+            if (score == -1) {
+                break;
+            }
+
+            if (score < 0 || score > 100) {
+                System.out.println("Score must be between 0 and 100. Try again.");
+                continue;
+            }
+
+            scores.add(score);
+        }
+
+        if (scores.isEmpty()) {
+            System.out.println("\nNo scores were entered. Goodbye!");
+        } else {
+            double sum = 0;
+            double highest = scores.get(0);
+            double lowest = scores.get(0);
+
+            for (double s : scores) {
+                sum += s;
+                if (s > highest) highest = s;
+                if (s < lowest) lowest = s;
+            }
+
+            double average = sum / scores.size();
+            char letterGrade;
+
+            if (average >= 90) {
+                letterGrade = 'A';
+            } else if (average >= 80) {
+                letterGrade = 'B';
+            } else if (average >= 70) {
+                letterGrade = 'C';
+            } else if (average >= 60) {
+                letterGrade = 'D';
+            } else {
+                letterGrade = 'F';
+            }
+
+            System.out.println("\n------------- Summary Report -------------");
+            System.out.println("Total Students/Scores: " + scores.size());
+            System.out.printf("Average Score:        %.2f%%\n", average);
+            System.out.println("Highest Score:        " + highest + "%");
+            System.out.println("Lowest Score:         " + lowest + "%");
+            System.out.println("Overall Class Grade:  " + letterGrade);
+            System.out.println("------------------------------------------");
+        }
+
+        scanner.close();
+    }
+}
